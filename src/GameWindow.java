@@ -6,10 +6,17 @@ public class GameWindow extends JFrame
 {
     private final int BOARD_SIZE = 64;
     private JButton[] squares = new JButton[BOARD_SIZE];
-    private Color boardColor1 = Color.decode("#282828");
 
-    public GameWindow() 
+    private Color boardColor1 = Color.decode("#282828");
+    private Color boardColor2 = Color.decode("#ebdbb2");
+    private Color pieceColor1 = Color.decode("#cc241d");
+    private Color pieceColor2 = Color.decode("#458588");
+
+    Game game;
+
+    public GameWindow(Game game) 
     {
+        this.game = game;
         this.setSize(800, 800);
         Container container = this.getContentPane();
         container.setLayout(new GridLayout(8,8));
@@ -25,14 +32,26 @@ public class GameWindow extends JFrame
             final int buttonIndex = i;
             squares[i].addActionListener(new ActionListener() 
             {
-                public void actionPerformed(ActionEvent e) {buttonClicked(buttonIndex);}
+                public void actionPerformed(ActionEvent e) {game.buttonClicked(buttonIndex);}
             });
             
             container.add(squares[i]);
         }
     }
 
-    private void buttonClicked(int buttonIndex) {
-        
+    public void setButtonColor(int i, Color color) {
+        squares[i].setBackground(color);
     }
+
+    public Color getButtonColor(int i) {
+        return squares[i].getBackground();
+    }
+
+    public boolean isPlayersPiece(int i, boolean player) {
+        if ((player && squares[i].getBackground().equals(pieceColor1)) || (!player && squares[i].getBackground().equals(pieceColor2))) {
+            return true;
+        }
+        return false;
+    }
+
 }   
