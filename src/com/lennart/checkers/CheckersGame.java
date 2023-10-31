@@ -15,6 +15,10 @@ public class CheckersGame {
         gameWindow = new GameWindow();
     }
 
+    public static void exitGame() {
+        System.exit(0);
+    }
+
     /**
      * Handles a square being clicked
      * @param row - row of square clicked
