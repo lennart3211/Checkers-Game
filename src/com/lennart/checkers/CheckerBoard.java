@@ -35,20 +35,24 @@ public class CheckerBoard extends JPanel {
     }
 
     private void setupCheckerPieces() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (i % 2 != j % 2) {
-                    board[i][j].setPiece(true, PIECE_COLOR_1);
+                    board[i][j].setPiece(true, false);
                 } 
             }
         }
 
-        for (int i = SIZE - 3; i < SIZE; i++) {
+        for (int i = SIZE - 2; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (i % 2 != j % 2) {
-                    board[i][j].setPiece(true, PIECE_COLOR_2);
+                    board[i][j].setPiece(true, true);
                 }
             }
         }
+    }
+
+    public CheckerPiece getPiece(int row, int col) {
+        return board[row][col];
     }
 }

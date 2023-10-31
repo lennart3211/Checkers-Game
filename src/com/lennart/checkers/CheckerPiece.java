@@ -10,6 +10,7 @@ public class CheckerPiece extends JButton {
     private int col;
     private Color color;
     private boolean hasPiece;
+    private boolean player;
 
     public CheckerPiece(int row, int column, Color color) {
         this.row = row;
@@ -21,16 +22,20 @@ public class CheckerPiece extends JButton {
         setBorderPainted(false);
     }
 
-    public Color getColor() {
-        return color;
+    public boolean getPlayer() {
+        return player;
     }
 
     public boolean hasPiece() {
         return hasPiece;
     }
 
-    public void setPiece(boolean hasPiece, Color color) {
+    public void setPiece(boolean hasPiece, boolean player) {
         this.hasPiece = hasPiece;
-        this.color = color;
+        if (player) {
+            setBackground(Color.decode("#cc241d"));
+        } else {
+            setBackground(Color.decode("#458588"));
+        }
     }
 }
