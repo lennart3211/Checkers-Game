@@ -13,6 +13,7 @@ public class GameMenu extends JMenuBar {
         gameMenu = new JMenu("Game");
         
         newGameItem = new JMenuItem("New Game");
+        newGameItem.addActionListener(e -> CheckersGame.startNewGame());
         exitItem = new JMenuItem("Exit");
 
         gameMenu.add(newGameItem);

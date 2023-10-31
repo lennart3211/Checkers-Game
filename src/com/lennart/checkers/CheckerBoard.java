@@ -1,30 +1,29 @@
 package com.lennart.checkers;
 
 import javax.swing.JPanel;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+/**
+ * Represents the checker board
+ */
 public class CheckerBoard extends JPanel {
+
     public static final int SIZE = 8;
-    public static final Color BOARD_COLOR_1 = Color.decode("#282828");
-    public static final Color BOARD_COLOR_2 = Color.decode("#ebdbb2");
-    public static final Color PIECE_COLOR_1 = Color.decode("#458588");
-    public static final Color PIECE_COLOR_2 = Color.decode("#cc241d");
-    private CheckerPiece[][] board;
+    private CheckerSquare[][] board;
 
     public CheckerBoard() {
         this.setLayout(new GridLayout(SIZE, SIZE));
         this.setPreferredSize(new Dimension(800, 800));
-        board = new CheckerPiece[SIZE][SIZE];
+        board = new CheckerSquare[SIZE][SIZE];
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                CheckerPiece piece;
+                CheckerSquare piece;
                 if (i % 2 == j % 2) {
-                    piece = new CheckerPiece(i,j, BOARD_COLOR_2);
+                    piece = new CheckerSquare(i,j, CheckerColors.BOARD_COLOR_2);
                 } else {
-                    piece = new CheckerPiece(i,j, BOARD_COLOR_1);
+                    piece = new CheckerSquare(i,j, CheckerColors.BOARD_COLOR_1);
                 }
                 board[i][j] = piece;
                 this.add(piece);
@@ -52,7 +51,28 @@ public class CheckerBoard extends JPanel {
         }
     }
 
-    public CheckerPiece getPiece(int row, int col) {
+    public CheckerSquare getPiece(int row, int col) {
         return board[row][col];
+    }
+
+    public boolean hasWon(boolean player) {
+        if (!player) {
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    if (board[i][j].getPlayer()) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    if (!board[i][j].getPlayer()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

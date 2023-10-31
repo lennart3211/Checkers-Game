@@ -10,7 +10,7 @@ public class StatusBar extends JPanel {
 
     public StatusBar() {
         this.setLayout(new BorderLayout());
-        statusLabel = new JLabel("Ready");
+        statusLabel = new JLabel("Player 1's turn");
         this.add(statusLabel, BorderLayout.WEST);
     }
 

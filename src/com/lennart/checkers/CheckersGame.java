@@ -2,11 +2,16 @@ package com.lennart.checkers;
 
 public class CheckersGame {
     private static GameWindow gameWindow;
-    private static CheckerPiece selectedPiece;
+    private static CheckerSquare selectedPiece;
     private static boolean currPlayer = false;
 
     /** Constructor */
     public CheckersGame() {
+        gameWindow = new GameWindow();
+    }
+
+    public static void startNewGame() {
+        currPlayer = false;
         gameWindow = new GameWindow();
     }
 
@@ -16,23 +21,44 @@ public class CheckersGame {
      * @param col - column of square clicked
      */
     public static void onCheckerPieceClicked(int row, int col) {
-        CheckerPiece clickedPiece = gameWindow.getCheckerBoard().getPiece(row, col);
 
-        if (clickedPiece.hasPiece() && isTurn(clickedPiece.getPlayer())) {
+        // The piece the user just clicked on
+        CheckerSquare clickedSquare = gameWindow.getCheckerBoard().getPiece(row, col);
+
+        // Checks if the clicked piece is from the user
+        if (clickedSquare.hasPiece() && isTurn(clickedSquare.getPlayer())) {
             System.out.println("selected");
-            selectedPiece = clickedPiece;
-        } else if (selectedPiece != null && isValidMove(selectedPiece, row, col)) {
+
+            // Selects piece to be moved
+            selectedPiece = clickedSquare;
+        }
+        
+        // If a piece is already selected, checks if it's a valid move
+        else if (selectedPiece != null && isValidMove(clickedSquare)) {
             System.out.println("moved");
+
+            // removes piece from the selected piece
             selectedPiece.removePiece();
-            clickedPiece.setPiece(currPlayer);
+
+            // moves piece to new square
+            clickedSquare.setPiece(currPlayer);
+
+            if ((clickedSquare.getRow() == 8 && clickedSquare.getPlayer()) || (clickedSquare.getRow() == 0 && !clickedSquare.getPlayer())) {
+                System.out.println("King");
+                clickedSquare.makeKing();
+            }
+
+            // change turn
             currPlayer = !currPlayer;
+
+            // change turn message
             if (currPlayer)
-                gameWindow.geStatusBar().setStatus("Player 1's turn");
-            else 
                 gameWindow.geStatusBar().setStatus("Player 2's turn");
+            else 
+                gameWindow.geStatusBar().setStatus("Player 1's turn");
         } else {
             System.out.println("invalid");
-            selectedPiece = new CheckerPiece(-1, -1, null);
+            selectedPiece = new CheckerSquare(-1, -1, null);
         }
     }
 
@@ -40,14 +66,21 @@ public class CheckersGame {
         return player == currPlayer;
     }
 
-    private static boolean isValidMove(CheckerPiece piece, int newRow, int newCol) {
-        int row = piece.getRow();
-        int col = piece.getCol();
+    /**
+     * Checks if move is valid
+     * @param square - The clicked square
+     * @return
+     */
+    private static boolean isValidMove(CheckerSquare square) {
+        int row = selectedPiece.getRow();
+        int col = selectedPiece.getCol();
+        int newRow = square.getRow();
+        int newCol = square.getCol();
 
         int rowDistance = newRow - row;
         int colDistance = newCol - col;
 
-        if (gameWindow.getCheckerBoard().getPiece(newRow, newCol).hasPiece()) {
+        if (square.hasPiece()) {
             return false;
         }
 
@@ -60,17 +93,21 @@ public class CheckersGame {
         if (Math.abs(rowDistance) == 2) {
             int middleRow = row + rowDistance / 2;
             int middleCol = col + colDistance / 2;
-            CheckerPiece pieceInTheMiddle = gameWindow.getCheckerBoard().getPiece(middleRow, middleCol);
-            if (pieceInTheMiddle == null || pieceInTheMiddle.getPlayer() == piece.getPlayer()) {
+            CheckerSquare pieceInTheMiddle = gameWindow.getCheckerBoard().getPiece(middleRow, middleCol);
+            if (pieceInTheMiddle == null || pieceInTheMiddle.getPlayer() == selectedPiece.getPlayer()) {
                 return false;
             }
             pieceInTheMiddle.removePiece();
+            if (gameWindow.getCheckerBoard().hasWon(currPlayer)) {
+                String playerName = currPlayer ? "Player 1" : "Player 2";
+                GameOverDialog.displayGameOverMessage(playerName);
+            }
         }
 
         // Check if the move for the piece is moving forward, or any direction if it's a king
-        if (piece.isKing()
-                || (piece.getPlayer() && rowDistance > 0)
-                || (!piece.getPlayer() && rowDistance < 0)
+        if (selectedPiece.isKing()
+                || (selectedPiece.getPlayer() && rowDistance > 0)
+                || (!selectedPiece.getPlayer() && rowDistance < 0)
         ) {
             return true;
         }

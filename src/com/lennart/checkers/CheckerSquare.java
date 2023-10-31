@@ -2,10 +2,12 @@ package com.lennart.checkers;
 
 import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.JButton;
 
-public class CheckerPiece extends JButton {
+/**
+ * represents a single square on the checker board
+ */
+public class CheckerSquare extends JButton {
 
     private int row;
     private int col;
@@ -14,12 +16,7 @@ public class CheckerPiece extends JButton {
     private boolean isKing;
     private boolean player;
 
-    public static final Color BOARD_COLOR_1 = Color.decode("#282828");
-    public static final Color BOARD_COLOR_2 = Color.decode("#ebdbb2");
-    public static final Color PIECE_COLOR_1 = Color.decode("#458588");
-    public static final Color PIECE_COLOR_2 = Color.decode("#cc241d");
-
-    public CheckerPiece(int row, int column, Color color) {
+    public CheckerSquare(int row, int column, Color color) {
         this.row = row;
         this.col = column;
         this.color = color;
@@ -52,18 +49,22 @@ public class CheckerPiece extends JButton {
         this.player = player;
 
         if (player) {
-            setBackground(PIECE_COLOR_2);
+            setBackground(CheckerColors.PIECE_COLOR_2);
         } else {
-            setBackground(PIECE_COLOR_1);
+            setBackground(CheckerColors.PIECE_COLOR_1);
         }
     }
 
     public void removePiece() {
         hasPiece = false;
-        setBackground(BOARD_COLOR_1);
+        setBackground(CheckerColors.BOARD_COLOR_1);
     }
 
     public boolean isKing() {
         return isKing;
+    }
+
+    public void makeKing() {
+        isKing = true;
     }
 }

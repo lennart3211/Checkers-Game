@@ -3,12 +3,16 @@ package com.lennart.checkers;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
+/**
+ * Main window for game
+ */
 public class GameWindow extends JFrame { 
     
     private GameMenu gameMenu;
     private CheckerBoard checkerBoard;
     private StatusBar statusBar;
 
+    /** Constructor */
     public GameWindow() {
         gameMenu = new GameMenu();
         statusBar = new StatusBar();
