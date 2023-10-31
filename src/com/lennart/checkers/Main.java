@@ -1,5 +1,7 @@
 package com.lennart.checkers;
 
 public class Main {
-    CheckersGame game = new CheckersGame();
+    public static void main(String[] args) {
+        new CheckersGame();
+    }
 }

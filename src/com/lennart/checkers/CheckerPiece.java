@@ -6,11 +6,18 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 
 public class CheckerPiece extends JButton {
+
     private int row;
     private int col;
     private Color color;
     private boolean hasPiece;
+    private boolean isKing;
     private boolean player;
+
+    public static final Color BOARD_COLOR_1 = Color.decode("#282828");
+    public static final Color BOARD_COLOR_2 = Color.decode("#ebdbb2");
+    public static final Color PIECE_COLOR_1 = Color.decode("#458588");
+    public static final Color PIECE_COLOR_2 = Color.decode("#cc241d");
 
     public CheckerPiece(int row, int column, Color color) {
         this.row = row;
@@ -20,6 +27,16 @@ public class CheckerPiece extends JButton {
         setBackground(this.color);
         setOpaque(true);
         setBorderPainted(false);
+
+        this.addActionListener(e -> CheckersGame.onCheckerPieceClicked(row, column));
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 
     public boolean getPlayer() {
@@ -30,12 +47,23 @@ public class CheckerPiece extends JButton {
         return hasPiece;
     }
 
-    public void setPiece(boolean hasPiece, boolean player) {
-        this.hasPiece = hasPiece;
+    public void setPiece(boolean player) {
+        hasPiece = true;
+        this.player = player;
+
         if (player) {
-            setBackground(Color.decode("#cc241d"));
+            setBackground(PIECE_COLOR_2);
         } else {
-            setBackground(Color.decode("#458588"));
+            setBackground(PIECE_COLOR_1);
         }
+    }
+
+    public void removePiece() {
+        hasPiece = false;
+        setBackground(BOARD_COLOR_1);
+    }
+
+    public boolean isKing() {
+        return isKing;
     }
 }

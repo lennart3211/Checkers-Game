@@ -38,7 +38,7 @@ public class CheckerBoard extends JPanel {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (i % 2 != j % 2) {
-                    board[i][j].setPiece(true, false);
+                    board[i][j].setPiece(true);
                 } 
             }
         }
@@ -46,7 +46,7 @@ public class CheckerBoard extends JPanel {
         for (int i = SIZE - 2; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (i % 2 != j % 2) {
-                    board[i][j].setPiece(true, true);
+                    board[i][j].setPiece(false);
                 }
             }
         }
