@@ -34,7 +34,7 @@ public class CheckerBoard extends JPanel {
     }
 
     private void setupCheckerPieces() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (i % 2 != j % 2) {
                     board[i][j].setPiece(true);
@@ -42,7 +42,7 @@ public class CheckerBoard extends JPanel {
             }
         }
 
-        for (int i = SIZE - 2; i < SIZE; i++) {
+        for (int i = SIZE - 3; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (i % 2 != j % 2) {
                     board[i][j].setPiece(false);
@@ -57,7 +57,7 @@ public class CheckerBoard extends JPanel {
 
     public boolean hasWon(boolean player) {
         if (!player) {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < SIZE; i++) {
                 for (int j = 0; j < SIZE; j++) {
                     if (board[i][j].getPlayer()) {
                         return false;
@@ -65,7 +65,7 @@ public class CheckerBoard extends JPanel {
                 }
             }
         } else {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < SIZE; i++) {
                 for (int j = 0; j < SIZE; j++) {
                     if (!board[i][j].getPlayer()) {
                         return false;
